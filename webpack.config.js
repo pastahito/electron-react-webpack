@@ -1,27 +1,22 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+
+const ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
-
-    watch: true,
-
+    watch: ENV === 'development',
     target: 'electron-renderer',
-
     entry: './app/src/renderer_process.js',
-
     output: {
         path: __dirname + '/app/build',
         publicPath: 'build/',
         filename: 'bundle.js'
     },
-
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
-                options: {
-                    presets: ['react']
-                }
+                exclude: /node_modules/
             },
             {
                 test: /\.css$/,
@@ -53,5 +48,4 @@ module.exports = {
     resolve: {
       extensions: ['.js', '.json', '.jsx']
     }
-
-}
+};
